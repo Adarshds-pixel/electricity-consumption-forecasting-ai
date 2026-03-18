@@ -1,0 +1,371 @@
+/* GENERAL RESET & BASE */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  background: #020617;
+  color: #e5e7eb;
+  overflow-x: hidden;
+}
+
+/* HELPER */
+.hidden {
+  display: none !important;
+}
+
+/* LOGIN SCREEN */
+.login-screen {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #0f172a;
+}
+
+.login-box {
+  width: 320px;
+  background: #1e293b;
+  padding: 30px;
+  border-radius: 12px;
+  text-align: center;
+  box-shadow: 0 0 24px rgba(0, 0, 0, 0.5);
+}
+
+.login-title {
+  color: #ffffff;
+  font-size: 1.3rem;
+  margin-bottom: 18px;
+}
+
+.login-box input {
+  width: 100%;
+  margin-bottom: 10px;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #475569;
+  background: #020617;
+  color: #e5e7eb;
+  font-size: 0.9rem;
+}
+
+#login-btn {
+  width: 100%;
+  padding: 10px;
+  border-radius: 8px;
+  border: none;
+  background: #4f46e5;
+  color: #ffffff;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 4px;
+}
+
+.login-error {
+  margin-top: 8px;
+  font-size: 0.85rem;
+  color: #ef4444;
+}
+
+/* WELCOME SCREEN */
+.welcome-screen {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background: radial-gradient(circle at top, #111827, #020617);
+}
+
+.welcome-card {
+  max-width: 900px;
+  width: 100%;
+  background: #020617;
+  border-radius: 16px;
+  padding: 24px 28px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+  border: 1px solid #1f2937;
+  text-align: center;
+}
+
+.welcome-title {
+  font-size: 1.6rem;
+  margin-bottom: 10px;
+  font-weight: 600;
+}
+
+.welcome-subtitle {
+  color: #94a3b8;
+  margin-bottom: 25px;
+}
+
+.welcome-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 14px;
+  margin-bottom: 16px;
+}
+
+.welcome-section {
+  background: #0f172a;
+  padding: 15px;
+  border-radius: 10px;
+  border: 1px solid #1e293b;
+}
+
+.welcome-btn {
+  padding: 10px 20px;
+  border-radius: 999px;
+  border: none;
+  background: #4f46e5;
+  color: #fff;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 4px;
+}
+
+/* DASHBOARD */
+#app-main {
+  padding: 20px;
+}
+
+.app-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 18px;
+}
+
+.app-title {
+  font-size: 1.4rem;
+  font-weight: 600;
+}
+
+.app-subtitle {
+  font-size: 0.9rem;
+  color: #9ca3af;
+}
+
+.backend-status {
+  padding: 6px 10px;
+  border-radius: 6px;
+  border: 1px solid #22c55e;
+  color: #22c55e;
+  font-size: 0.8rem;
+}
+
+/* TABS */
+.tab-nav {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+
+.tab-btn {
+  padding: 8px 16px;
+  border-radius: 8px;
+  background: #1e293b;
+  border: 1px solid #475569;
+  cursor: pointer;
+  color: #e5e7eb;
+  font-size: 0.9rem;
+}
+
+.tab-btn.active {
+  background: #4f46e5;
+  border-color: #6366f1;
+}
+
+/* PAGE SECTIONS */
+.page-section {
+  margin-top: 10px;
+  margin-bottom: 20px;
+}
+
+/* CARD */
+.card {
+  background: #0f172a;
+  padding: 22px;
+  border-radius: 14px;
+  margin-bottom: 16px;
+  border: 1px solid #1e293b;
+}
+
+.card-title {
+  font-size: 1.05rem;
+  margin-bottom: 10px;
+  font-weight: 600;
+}
+
+/* FIELDS */
+.field {
+  display: block;
+  margin-bottom: 12px;
+}
+
+.field-row {
+  display: flex;
+  gap: 12px;
+}
+
+.field span {
+  font-size: 0.85rem;
+  color: #cbd5e1;
+}
+
+input[type="number"],
+input[type="file"],
+select {
+  width: 100%;
+  padding: 8px;
+  background: #1e293b;
+  border: 1px solid #475569;
+  color: #e5e7eb;
+  border-radius: 8px;
+}
+
+.primary-btn,
+.secondary-btn {
+  padding: 10px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  border: none;
+}
+
+.primary-btn {
+  background: #4f46e5;
+  color: white;
+}
+
+.secondary-btn {
+  background: #1e293b;
+  border: 1px solid #475569;
+}
+
+/* FORECAST SUMMARY */
+.summary-text {
+  background: #1e293b;
+  padding: 10px;
+  border-radius: 10px;
+  white-space: pre-wrap;
+  font-size: 0.85rem;
+}
+
+.cost-info,
+.tod-summary {
+  font-size: 0.85rem;
+  margin-top: 6px;
+  color: #94a3b8;
+}
+
+/* GRAPHS SIDE-BY-SIDE (MEDIUM SIZE) */
+.graphs-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  align-items: flex-start;
+}
+
+.graph-card {
+  flex: 1 1 48%;
+}
+
+.graph-card canvas {
+  width: 100% !important;
+  max-height: 360px !important;
+}
+
+/* SAFETY LIST */
+.safety-list {
+  list-style: none;
+  display: grid;
+  gap: 10px;
+}
+
+.safety-item {
+  background: #1e293b;
+  padding: 10px;
+  border-radius: 8px;
+}
+
+.safety-badge.high {
+  color: #f97316;
+  font-weight: bold;
+}
+
+.safety-badge.info {
+  color: #3b82f6;
+  font-weight: bold;
+}
+
+.safety-badge.normal {
+  color: #22c55e;
+  font-weight: bold;
+}
+
+/* TABLE */
+.table-wrapper {
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th,
+td {
+  border-bottom: 1px solid #334155;
+  padding: 8px;
+  font-size: 0.85rem;
+}
+
+th {
+  background: #1e293b;
+  text-align: left;
+  font-size: 0.8rem;
+  color: #cbd5e1;
+}
+
+/* ACTIONS ROW */
+.actions-row {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+/* HOW IT WORKS TEXT */
+.how-text {
+  font-size: 0.9rem;
+  color: #cbd5e1;
+  line-height: 1.5;
+}
+
+/* RESPONSIVE */
+@media (max-width: 900px) {
+  .app-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .field-row {
+    flex-direction: column;
+  }
+
+  .graphs-grid {
+    flex-direction: column;
+  }
+
+  .graph-card {
+    flex: 1 1 100%;
+  }
+}

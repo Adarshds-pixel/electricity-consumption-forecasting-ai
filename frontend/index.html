@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Electricity Consumption Forecasting</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+  <!-- LOGIN PAGE -->
+  <div id="login-screen" class="login-screen">
+    <div class="login-box">
+      <h1 class="login-title">Admin Login</h1>
+
+      <input id="username" type="text" placeholder="Username">
+      <input id="password" type="password" placeholder="Password">
+      <button id="login-btn">Login</button>
+
+      <p id="login-error" class="login-error hidden">Invalid username or password!</p>
+    </div>
+  </div>
+
+  <!-- WELCOME PAGE -->
+  <div id="welcome-screen" class="welcome-screen hidden">
+    <div class="welcome-card">
+      <h1 class="welcome-title">Welcome to Electricity Consumption Forecasting</h1>
+      <p class="welcome-subtitle">
+        Analyze your electricity usage, forecast future demand and get smart safety & cost suggestions.
+      </p>
+
+      <div class="welcome-grid">
+        <div class="welcome-section">
+          <h2>🔮 Predict</h2>
+          <p>
+            Upload your consumption CSV and get LSTM-based forecasts for hours, days, months or years.
+          </p>
+        </div>
+        <div class="welcome-section">
+          <h2>📊 Dashboards</h2>
+          <p>
+            View history vs forecast, seasonal patterns, and usage distribution across time of day.
+          </p>
+        </div>
+        <div class="welcome-section">
+          <h2>⚙️ Hybrid Profiles</h2>
+          <p>
+            Switch between single household, apartment building and industrial usage to see profile-aware alerts.
+          </p>
+        </div>
+      </div>
+
+      <button id="enter-app-btn" class="welcome-btn">Enter Dashboard</button>
+    </div>
+  </div>
+
+  <!-- MAIN APP -->
+  <div id="app-main" class="hidden">
+    <div class="app-container">
+      <header class="app-header">
+        <div>
+          <h1 class="app-title">Electricity Consumption Forecasting</h1>
+          <p class="app-subtitle">LSTM-based forecasting with hybrid profiles, cost and safety insights</p>
+        </div>
+        <div id="backend-status" class="backend-status">
+          Backend: checking…
+        </div>
+      </header>
+
+      <nav class="tab-nav">
+        <button class="tab-btn active" data-target="page-predict">Predict & Upload</button>
+        <button class="tab-btn" data-target="page-graphs">Graphs & Seasonal Trends</button>
+        <button class="tab-btn" data-target="page-safety">Safety Measures</button>
+        <button class="tab-btn" data-target="page-table">Usage Table</button>
+        <button class="tab-btn" data-target="page-how">How it works</button>
+      </nav>
+
+      <!-- PAGE 1 -->
+      <section id="page-predict" class="page-section">
+        <div class="card">
+          <h2 class="card-title">1. Data & Forecast Settings</h2>
+
+          <label class="field">
+            <span>Upload CSV (DateTime, Consumption_KWh)</span>
+            <input type="file" id="file-input" accept=".csv" />
+          </label>
+
+          <div class="field-row">
+            <label class="field">
+              <span>Forecast Horizon</span>
+              <input type="number" id="horizon-value" value="24" min="1" />
+            </label>
+            <label class="field">
+              <span>Unit</span>
+              <select id="horizon-unit">
+                <option value="hours">Hours</option>
+                <option value="days">Days</option>
+                <option value="months">Months</option>
+                <option value="years">Years</option>
+              </select>
+            </label>
+          </div>
+
+          <div class="field-row">
+            <label class="field">
+              <span>Tariff (₹/kWh)</span>
+              <input type="number" id="tariff-input" value="4" step="0.1" min="0" />
+            </label>
+            <label class="field">
+              <span>Weather Condition</span>
+              <select id="weather-select">
+                <option value="">Normal</option>
+                <option value="hot">Hot / Summer</option>
+                <option value="cold">Cold / Winter</option>
+                <option value="rainy">Rainy / Monsoon</option>
+              </select>
+            </label>
+          </div>
+
+          <!-- NEW: usage type -->
+          <div class="field-row">
+            <label class="field">
+              <span>Usage Type (Hybrid Profile)</span>
+              <select id="usage-type">
+                <option value="household">Single household</option>
+                <option value="apartment">Apartment building</option>
+                <option value="industrial">Industrial consumer</option>
+              </select>
+            </label>
+          </div>
+
+          <button id="upload-predict-btn" class="primary-btn">Run Forecast</button>
+          <p id="error-text" class="error-text"></p>
+        </div>
+
+        <div class="card">
+          <h2 class="card-title">2. Forecast Summary</h2>
+          <pre id="summary-text" class="summary-text"></pre>
+          <p id="cost-info" class="cost-info"></p>
+          <p id="tod-summary" class="tod-summary"></p>
+        </div>
+      </section>
+
+      <!-- GRAPHS -->
+      <section id="page-graphs" class="page-section hidden">
+        <div class="graphs-grid">
+          <div class="card graph-card">
+            <h2 class="card-title">3. Historical vs Forecasted Load</h2>
+            <canvas id="historyChart"></canvas>
+            <div class="actions-row">
+              <button id="download-graph-btn" class="secondary-btn">Download Graph</button>
+            </div>
+          </div>
+
+          <div class="card graph-card">
+            <h2 class="card-title">4. Seasonal Pattern (Monthly Average)</h2>
+            <canvas id="seasonChart"></canvas>
+          </div>
+        </div>
+      </section>
+
+      <!-- SAFETY -->
+      <section id="page-safety" class="page-section hidden">
+        <div class="card">
+          <h2 class="card-title">5. Safety Measures & Energy Control</h2>
+          <ul id="safety-list" class="safety-list"></ul>
+        </div>
+      </section>
+
+      <!-- TABLE -->
+      <section id="page-table" class="page-section hidden">
+        <div class="card">
+          <h2 class="card-title">6. Forecast Usage Table</h2>
+          <div class="table-wrapper">
+            <table>
+              <thead>
+                <tr>
+                  <th>DateTime</th>
+                  <th>Predicted (kWh)</th>
+                  <th>Cost (₹)</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody id="forecast-table-body"></tbody>
+            </table>
+          </div>
+          <div class="actions-row">
+            <button id="download-btn" class="secondary-btn">Download CSV</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- HOW IT WORKS -->
+      <section id="page-how" class="page-section hidden">
+        <div class="card">
+          <h2 class="card-title">7. How it works</h2>
+          <p class="how-text">
+            1. <strong>Data Input:</strong> The user uploads a CSV file containing historical
+            electricity consumption with DateTime and Consumption_KWh columns.<br><br>
+            2. <strong>Pre-processing:</strong> The data is cleaned, sorted by time and scaled
+            using a saved scaler. Only the most recent rows are used to keep the model fast.<br><br>
+            3. <strong>LSTM Model:</strong> A trained LSTM (Long Short-Term Memory) neural
+            network learns temporal patterns from past consumption values and predicts
+            future load step-by-step for the selected horizon (hours/days/months/years).<br><br>
+            4. <strong>Hybrid Profiles:</strong> The same forecast is interpreted using
+            household, apartment or industrial reference levels to generate profile-aware
+            severity and cost insights.<br><br>
+            5. <strong>Intelligent Safety Layer:</strong> Based on predicted usage level,
+            peak hours, time-of-day, weather and profile severity, the system generates
+            5-point safety and energy saving suggestions.
+          </p>
+        </div>
+      </section>
+
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
